@@ -31,9 +31,8 @@ jobs:
       - run:
           name: report_span
           command: buildevents step $CIRCLE_WORKFLOW_ID \
-              $(cat /tmp/buildevents/be/${CIRCLE_JOB}/span_id) \
               $CIRCLE_JOB \
-              $(cat /tmp/start)
+              $(cat /tmp/start) sleep2
           when: always
 
   sleep3:
@@ -45,9 +44,8 @@ jobs:
       - run:
           name: report_span
           command: buildevents step $CIRCLE_WORKFLOW_ID \
-              $(cat /tmp/buildevents/be/${CIRCLE_JOB}/span_id) \
               $CIRCLE_JOB \
-              $(cat /tmp/start)
+              $(cat /tmp/start) sleep3
           when: always
   finish:
     executor: linuxgo

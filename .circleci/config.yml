@@ -1,0 +1,55 @@
+version: 2.1
+
+executors:
+  linuxgo:
+    docker:
+      - image: circleci/golang:1.10
+
+jobs:
+  setup:
+    executor: linuxgo
+    steps:
+      - run: mkdir -p /tmp/be
+      - run: curl -q -L -o /tmp/be/buildevents https://145-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
+      - persist_to_workspace:
+          root: /tmp/be
+          paths:
+            - buildevents
+  catchend:
+    executor: linuxgo
+    steps:
+      - attach_workspace:
+          at: /tmp/be
+      - run: buildevents watch
+  sleep2:
+    executor: linuxgo
+    steps:
+      - run: sleep 20
+
+  sleep3:
+    executor: linuxgo
+    steps:
+      - run: sleep 15
+  finish:
+    executor: linuxgo
+    steps:
+      - run: echo "all done"
+
+workflows:
+  paint:
+    jobs:
+      - setup
+      - catchend:
+          requires:
+            - setup
+      - sleep2:
+          requires:
+            - setup
+      - sleep3:
+          requires:
+            - setup
+      - finish:
+          requires:
+            - sleep2
+            - sleep3
+

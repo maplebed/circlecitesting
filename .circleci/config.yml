@@ -31,6 +31,7 @@ jobs:
     executor: linuxgo
     steps:
       - run: sleep 15
+      - run: false
   finish:
     executor: linuxgo
     steps:

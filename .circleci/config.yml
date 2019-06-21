@@ -21,7 +21,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/be
-      - run: /tmp/be/buildevents watch 2 3 4
+      - run: /tmp/be/buildevents watch $CIRCLE_WORKFLOW_ID - -
   sleep2:
     executor: linuxgo
     steps:

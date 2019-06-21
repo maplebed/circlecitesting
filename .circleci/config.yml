@@ -20,7 +20,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/be
-      - run: buildevents watch
+      - run: /tmp/be/buildevents watch
   sleep2:
     executor: linuxgo
     steps:

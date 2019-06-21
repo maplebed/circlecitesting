@@ -10,7 +10,7 @@ jobs:
     executor: linuxgo
     steps:
       - run: mkdir -p /tmp/be
-      - run: curl -q -L -o /tmp/be/buildevents https://157-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
+      - run: curl -q -L -o /tmp/be/buildevents https://165-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
       - run: chmod 755 /tmp/be/buildevents
       - persist_to_workspace:
           root: /tmp/be
@@ -32,7 +32,7 @@ jobs:
               ${CIRCLE_JOB} sleep -- sleep 20
       - run:
           name: report_span
-          command: echo /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
+          command: /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
               $CIRCLE_JOB \
               $(cat /tmp/start) sleep2
           when: always

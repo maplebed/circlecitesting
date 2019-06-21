@@ -25,13 +25,30 @@ jobs:
   sleep2:
     executor: linuxgo
     steps:
-      - run: sleep 20
+      - run: date +%s > /tmp/start
+      - run: buildevents cmd $CIRCLE_WORKFLOW_ID \
+              ${CIRCLE_JOB} sleep -- sleep 20
+      - run:
+          name: report_span
+          command: buildevents step $CIRCLE_WORKFLOW_ID \
+              $(cat /tmp/buildevents/be/${CIRCLE_JOB}/span_id) \
+              $CIRCLE_JOB \
+              $CIRCLE_JOB
+          when: always
 
   sleep3:
     executor: linuxgo
     steps:
+      - run: date +%s > /tmp/start
       - run: sleep 15
       - run: "false"
+      - run:
+          name: report_span
+          command: buildevents step $CIRCLE_WORKFLOW_ID \
+              $(cat /tmp/buildevents/be/${CIRCLE_JOB}/span_id) \
+              $CIRCLE_JOB \
+              $CIRCLE_JOB
+          when: always
   finish:
     executor: linuxgo
     steps:

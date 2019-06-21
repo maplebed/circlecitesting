@@ -10,7 +10,7 @@ jobs:
     executor: linuxgo
     steps:
       - run: mkdir -p /tmp/be
-      - run: curl -q -L -o /tmp/be/buildevents https://145-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
+      - run: curl -q -L -o /tmp/be/buildevents https://153-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
       - run: chmod 755 /tmp/be/buildevents
       - persist_to_workspace:
           root: /tmp/be

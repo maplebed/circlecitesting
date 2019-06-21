@@ -32,7 +32,7 @@ jobs:
               ${CIRCLE_JOB} sleep -- sleep 20
       - run:
           name: report_span
-          command: /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
+          command: echo /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
               $CIRCLE_JOB \
               $(cat /tmp/start) sleep2
           when: always
@@ -44,7 +44,7 @@ jobs:
           at: /tmp/be
       - run: date +%s > /tmp/start
       - run: sleep 15
-      - run: "false"
+      # - run: "false"
       - run:
           name: report_span
           command: /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \

@@ -1,5 +1,10 @@
 version: 2.1
 
+
+orbs:
+  buildevents: honeycombio/buildevents@dev:ben.add_polling
+
+
 executors:
   linuxgo:
     docker:
@@ -9,64 +14,31 @@ jobs:
   setup:
     executor: linuxgo
     steps:
-      - run: mkdir -p /tmp/be
-      - run: curl -q -L -o /tmp/be/buildevents https://199-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
-      - run: chmod 755 /tmp/be/buildevents
-      - persist_to_workspace:
-          root: /tmp/be
-          paths:
-            - buildevents
+      - buildevents/start_trace
   catchend:
     executor: linuxgo
     steps:
-      - attach_workspace:
-          at: /tmp/be
-      - run: /tmp/be/buildevents watch $CIRCLE_WORKFLOW_ID - -
+      - buildevents/watch_build_and_finish
   sleep2:
     executor: linuxgo
     steps:
-      - attach_workspace:
-          at: /tmp/be
-      - run: date +%s > /tmp/start
-      - run: /tmp/be/buildevents cmd $CIRCLE_WORKFLOW_ID \
-              ${CIRCLE_JOB} sleep -- sleep 20
-      - run:
-          name: report_span
-          command: /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
-              $CIRCLE_JOB \
-              $(cat /tmp/start) sleep2
-          when: always
-      - run: |
-          mkdir saved
-          touch saved/save-one.empty
-          touch saved/save-two.empty
-      - persist_to_workspace:
-          root: saved
-          paths:
-            - save-*
+      - buildevents/with_job_span:
+          steps:
+            - run: buildevents cmd $CIRCLE_WORKFLOW_ID \
+                    ${CIRCLE_JOB} sleep -- sleep 20
 
   sleep3:
     executor: linuxgo
     steps:
-      - attach_workspace:
-          at: /tmp/be
-      - run: date +%s > /tmp/start
-      - run: sleep 15
-      # - run: "false"
-      - run:
-          name: report_span
-          command: /tmp/be/buildevents step $CIRCLE_WORKFLOW_ID \
-              $CIRCLE_JOB \
-              $(cat /tmp/start) sleep3
-          when: always
+      - buildevents/with_job_span:
+          steps:
+            - run: date +%s > /tmp/start
+            - run: sleep 15
+            # - run: "false"
   finish:
     executor: linuxgo
     steps:
       - run: echo "all done"
-      - attach_workspace:
-          at: sa
-      - run: ls -al sa
-
 workflows:
   paint:
     jobs:

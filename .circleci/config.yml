@@ -36,6 +36,14 @@ jobs:
               $CIRCLE_JOB \
               $(cat /tmp/start) sleep2
           when: always
+      - run: |
+          mkdir saved
+          touch saved/save-one.empty
+          touch saved/save-two.empty
+      - persist_to_workspace:
+          root: saved
+          paths:
+            - save-*
 
   sleep3:
     executor: linuxgo
@@ -55,6 +63,9 @@ jobs:
     executor: linuxgo
     steps:
       - run: echo "all done"
+      - attach_workspace:
+          at: sa
+      - run: ls -al sa
 
 workflows:
   paint:

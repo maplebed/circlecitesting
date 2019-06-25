@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:ben.add_polling
+  buildevents: honeycombio/buildevents@0.1.1
 
 
 executors:

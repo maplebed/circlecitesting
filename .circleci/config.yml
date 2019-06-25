@@ -35,7 +35,7 @@ jobs:
       - buildevents/with_job_span:
           steps:
             - run: date +%s > /tmp/start
-            - run: sleep 150
+            - run: sleep 12
             # - run: "false"
   finish:
     executor: linuxgo

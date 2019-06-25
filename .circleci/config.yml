@@ -18,7 +18,9 @@ jobs:
   catchend:
     executor: linuxgo
     steps:
-      - buildevents/watch_build_and_finish
+      - buildevents/watch_build_and_finish:
+          timeout: 1
+
   sleep2:
     executor: linuxgo
     steps:
@@ -33,7 +35,7 @@ jobs:
       - buildevents/with_job_span:
           steps:
             - run: date +%s > /tmp/start
-            - run: sleep 15
+            - run: sleep 150
             # - run: "false"
   finish:
     executor: linuxgo

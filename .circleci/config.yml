@@ -32,9 +32,9 @@ jobs:
   test_extra_fields:
     executor: linuxgo
     steps:
-      - run: curl -q -L -o ./betesting https://268-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
+      - run: curl -q -L -o ./betesting https://272-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents
       - run: chmod 755 ./betesting
-      - run: echo 'foo=bar a=14 baz="hello kitty" cool%story=bro f %^asdf' > ./extra_fields.logfmt
+      - run: echo 'foo=bar a=14 baz="hello kitty" bilool=false cool%story=bro f %^asdf' > ./extra_fields.logfmt
       - run: echo 'export BUILDEVENT_FILE=./extra_fields.logfmt' >> $BASH_ENV
       - run: ./betesting cmd $CIRCLE_WORKFLOW_ID $(echo $CIRCLE_JOB | sha256sum | awk '{print $1}') extra -- sleep 1
       - run: ./betesting step $CIRCLE_WORKFLOW_ID $(echo $CIRCLE_JOB | sha256sum | awk '{print $1}') $(date +%s) test_extra_fields

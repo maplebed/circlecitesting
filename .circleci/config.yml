@@ -62,9 +62,12 @@ workflows:
       - sleep2:
           requires:
             - setup
-      - sleep3:
+      - test_extra_fields:
           requires:
             - setup
+      - sleep3:
+          requires:
+            - test_extra_fields
       - finish:
           requires:
             - sleep2

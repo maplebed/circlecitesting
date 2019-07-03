@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:ben.update_be
+  buildevents: honeycombio/buildevents@0.1.1
 
 
 executors:
@@ -48,9 +48,13 @@ jobs:
     steps:
       - buildevents/with_job_span:
           steps:
+            - run: mkdir artifacts; set > artifacts/env.out
             - run: date +%s > /tmp/start
             - run: sleep 12
             # - run: "false"
+            - store_artifacts:
+                path: artifacts/
+
   finish:
     executor: linuxgo
     steps:

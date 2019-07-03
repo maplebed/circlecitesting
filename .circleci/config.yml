@@ -19,7 +19,7 @@ jobs:
     executor: linuxgo
     steps:
       - buildevents/watch_build_and_finish:
-          timeout: 1
+          timeout: 10
 
   sleep2:
     executor: linuxgo

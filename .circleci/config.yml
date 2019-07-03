@@ -74,7 +74,7 @@ workflows:
       #       - setup
       - sleep3:
           requires:
-            - test_extra_fields
+            - setup
       - finish:
           requires:
             - sleep2

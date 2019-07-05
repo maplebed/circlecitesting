@@ -36,7 +36,7 @@ jobs:
             - buildevents/add_context:
                 field_name: subshell
                 field_value: $(date "+%H:%M:%S.%6N")
-                verbose: true
+                verbose: "true"
             - run: echo "artisize=12345" >> $BASH_ENV
             - run: echo $artisize
             - buildevents/add_context:

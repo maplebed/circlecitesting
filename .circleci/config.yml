@@ -14,17 +14,18 @@ jobs:
     executor: linuxgo
     steps:
       - buildevents/start_trace
-  catchend:
-    executor: linuxgo
-    steps:
-      - buildevents/watch_build_and_finish:
-          timeout: 10
   # catchend:
   #   executor: linuxgo
   #   steps:
-  #     - run: |
-  #         export BUILDEVENT_TIMEOUT=3
-  #         buildevents watch aoeu
+  #     - buildevents/watch_build_and_finish:
+  #         timeout: 10
+  catchend:
+    executor: linuxgo
+    steps:
+      - run: |
+          curl -q -o be https://120-186895545-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents-linux-amd64
+          export BUILDEVENT_TIMEOUT=10
+          ./be watch aoeu
 
   sleep2:
     executor: linuxgo

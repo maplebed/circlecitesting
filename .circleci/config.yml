@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:ben.context
+  buildevents: honeycombio/buildevents@dev:master
 
 executors:
   linuxgo:
@@ -14,19 +14,19 @@ jobs:
     executor: linuxgo
     steps:
       - buildevents/start_trace
-  # catchend:
-  #   executor: linuxgo
-  #   steps:
-  #     - buildevents/watch_build_and_finish:
-  #         timeout: 10
   catchend:
     executor: linuxgo
     steps:
-      - run: |
-          curl -q -o be https://327-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents-linux-amd64
-          chmod 755 ./be
-          export BUILDEVENT_TIMEOUT=10
-          ./be watch aoeu
+      - buildevents/watch_build_and_finish:
+          timeout: 10
+  # catchend:
+  #   executor: linuxgo
+  #   steps:
+  #     - run: |
+  #         curl -q -o be https://327-172153261-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents-linux-amd64
+  #         chmod 755 ./be
+  #         export BUILDEVENT_TIMEOUT=10
+  #         ./be watch aoeu
 
   sleep2:
     executor: linuxgo

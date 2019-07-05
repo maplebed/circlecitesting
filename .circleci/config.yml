@@ -43,6 +43,7 @@ jobs:
                 field_name: shell_vars
                 field_value: $artisize
 
+
   test_extra_fields:
     executor: linuxgo
     steps:

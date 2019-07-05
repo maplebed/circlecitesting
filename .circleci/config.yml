@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:master
+  buildevents: honeycombio/buildevents@0.2.0
 
 executors:
   linuxgo:

@@ -25,6 +25,7 @@ jobs:
       - run: |
           curl -s -o be https://108-186895545-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents-linux-amd64
           chmod 755 be
+          export BUILDEVENT_TIMEOUT=1
           ./be watch aoeu
 
   sleep2:

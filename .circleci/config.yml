@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:ben.use_cobra
+  buildevents: honeycombio/buildevents@dev:ben.context
 
 executors:
   linuxgo:
@@ -23,9 +23,7 @@ jobs:
     executor: linuxgo
     steps:
       - run: |
-          curl -s -o be https://108-186895545-gh.circle-artifacts.com/0/go/src/github.com/honeycombio/buildevents/artifacts/buildevents-linux-amd64
-          chmod 755 be
-          export BUILDEVENT_TIMEOUT=1
+          export BUILDEVENT_TIMEOUT=3
           ./be watch aoeu
 
   sleep2:
@@ -34,7 +32,16 @@ jobs:
       - buildevents/with_job_span:
           steps:
             - run: buildevents cmd $CIRCLE_WORKFLOW_ID \
-                    ${BUILDEVENTS_SPAN_ID} sleep -- sleep 29
+                    ${BUILDEVENTS_SPAN_ID} sleep -- sleep 9
+            - buildevents/add_context:
+                field_name: subshell
+                field_value: $(date)
+            - run: echo "artisize=12345" >> $BASH_ENV
+            - run: echo $artisize
+            - buildevents/add_context:
+                field_name: shell_vars
+                field_value: $artisize
+
 
   # test_extra_fields:
   #   executor: linuxgo
@@ -55,9 +62,8 @@ jobs:
     steps:
       - buildevents/with_job_span:
           steps:
-            - run: mkdir artifacts; set > artifacts/env.out
             - run: date +%s > /tmp/start
-            - run: sleep 52
+            - run: sleep 12
             # - run: "false"
             - store_artifacts:
                 path: artifacts/

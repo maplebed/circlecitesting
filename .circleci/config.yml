@@ -14,17 +14,17 @@ jobs:
     executor: linuxgo
     steps:
       - buildevents/start_trace
-  # catchend:
-  #   executor: linuxgo
-  #   steps:
-  #     - buildevents/watch_build_and_finish:
-  #         timeout: 10
   catchend:
     executor: linuxgo
     steps:
-      - run: |
-          export BUILDEVENT_TIMEOUT=3
-          buildevents watch aoeu
+      - buildevents/watch_build_and_finish:
+          timeout: 10
+  # catchend:
+  #   executor: linuxgo
+  #   steps:
+  #     - run: |
+  #         export BUILDEVENT_TIMEOUT=3
+  #         buildevents watch aoeu
 
   sleep2:
     executor: linuxgo
@@ -35,7 +35,8 @@ jobs:
                     ${BUILDEVENTS_SPAN_ID} sleep -- sleep 9
             - buildevents/add_context:
                 field_name: subshell
-                field_value: $(date)
+                field_value: $(date "+%H:%M:%S.%6N")
+                verbose: true
             - run: echo "artisize=12345" >> $BASH_ENV
             - run: echo $artisize
             - buildevents/add_context:

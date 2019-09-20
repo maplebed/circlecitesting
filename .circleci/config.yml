@@ -17,7 +17,7 @@ jobs:
   catchend:
     executor: linuxgo
     steps:
-      - buildevents/watch_build_and_finish:
+      - buildevents/watch_build_and_finish
           # timeout: 10
   # catchend:
   #   executor: linuxgo
@@ -85,9 +85,9 @@ workflows:
       - sleep2:
           requires:
             - setup
-      - test_extra_fields:
-          requires:
-            - setup
+      # - test_extra_fields:
+      #     requires:
+      #       - setup
       - sleep3:
           requires:
             - setup

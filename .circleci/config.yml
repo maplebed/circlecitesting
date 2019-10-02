@@ -74,7 +74,7 @@ jobs:
   finish:
     executor: linuxgo
     steps:
-      - run: echo "all done"
+      - run: echo "all done done"
 workflows:
   paint:
     jobs:

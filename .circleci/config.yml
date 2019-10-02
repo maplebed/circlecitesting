@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  buildevents: honeycombio/buildevents@dev:dev:ben.spanids
+  buildevents: honeycombio/buildevents@dev:ben.spanids
 
 executors:
   linuxgo:
